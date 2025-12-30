@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alexander Lyadski | Hardware & Systems Engineering Consultant</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a3a5f;
+            --secondary: #00b894;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        h1 { font-size: 2.8rem; }
+        h2 { font-size: 2.2rem; border-bottom: 3px solid var(--secondary); padding-bottom: 10px; margin-bottom: 2rem; }
+        h3 { font-size: 1.5rem; color: var(--secondary); }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header & Navigation */
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 5px 0;
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            bottom: 0;
+            left: 0;
+            transition: width 0.3s;
+        }
+        
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(26, 58, 95, 0.95), rgba(26, 58, 95, 0.95));
+            color: white;
+            padding: 6rem 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            color: white;
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.8rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            color: var(--light);
+        }
+        
+        .tagline {
+            font-family: 'Source Code Pro', monospace;
+            color: var(--secondary);
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .btn:hover {
+            background-color: #00a085;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--secondary);
+            margin-left: 15px;
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--secondary);
+        }
+        
+        /* Sections */
+        section {
+            padding: 5rem 0;
+        }
+        
+        section:nth-child(even) {
+            background-color: white;
+        }
+        
+        /* About */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        
+        .specialties {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 2rem;
+        }
+        
+        .specialty {
+            background-color: #e8f4fc;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 500;
+            color: var(--primary);
+            border: 1px solid #c5e1f5;
+        }
+        
+        /* Experience Cards - UPDATED: Removed Embedded Systems */
+        .experience-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .experience-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .experience-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .experience-icon {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Skills */
+        .skills-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .skill-category {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .skill-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 1rem;
+        }
+        
+        .skill-item {
+            background-color: #e8f4fc;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            border: 1px solid #c5e1f5;
+        }
+        
+        /* Projects */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .project-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        /* Contact - UPDATED: Removed phone number */
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        
+        .contact-icon {
+            font-size: 1.5rem;
+            color: var(--secondary);
+            min-width: 30px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .social-link:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+        }
+        
+        .contact-form input,
+        .contact-form textarea,
+        .contact-form select {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 1.5rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 1rem;
+        }
+        
+        .contact-form textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--primary);
+            color: white;
+            padding: 3rem 0 1.5rem;
+            text-align: center;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+        
+        .copyright {
+            width: 100%;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--primary);
+                flex-direction: column;
+                padding: 1rem 0;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .nav-links li {
+                margin: 0;
+                text-align: center;
+                padding: 1rem 0;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.5rem;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            .experience-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">AL<span>Consulting</span></a>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#experience">Expertise</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>Alexander Lyadski</h1>
+            <div class="hero-subtitle">Hardware & Systems Engineering Consultant</div>
+            <p class="tagline">EV Charging • Power Electronics • PCB Design • System Architecture</p>
+            <p>Over 20 years of comprehensive experience in hardware design, system architecture, and engineering consulting for automotive, medical, and industrial applications across North America.</p>
+            <div>
+                <a href="#contact" class="btn">Contact Me</a>
+                <a href="#experience" class="btn btn-outline">View Expertise</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <h2>About Me</h2>
+            <div class="about-content">
+                <div>
+                    <p>I am a Hardware & Systems Engineering Consultant with extensive expertise in EV charging systems, power electronics, and hardware design. Based in Windsor, Ontario, I provide consulting services to clients across Canada and the United States.</p>
+                    <p>My career spans multiple industries including automotive electronics, medical devices, industrial systems, and telecommunications. I specialize in translating complex requirements into practical, efficient hardware solutions that meet rigorous industry standards.</p>
+                    <div class="specialties">
+                        <span class="specialty">EV Charging Infrastructure</span>
+                        <span class="specialty">Power Electronics Design</span>
+                        <span class="specialty">PCB Layout & Design</span>
+                        <span class="specialty">System Architecture</span>
+                        <span class="specialty">Functional Safety (ISO 26262)</span>
+                        <span class="specialty">Automotive Protocols</span>
+                        <span class="specialty">Medical Device Hardware</span>
+                        <span class="specialty">Requirements Management</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section - UPDATED: Only 3 cards, removed Embedded Systems -->
+    <section id="experience">
+        <div class="container">
+            <h2>Areas of Expertise</h2>
+            <div class="experience-cards">
+                <div class="experience-card">
+                    <div class="experience-icon">
+                        <i class="fas fa-car-battery"></i>
+                    </div>
+                    <h3>EV Charging & Automotive Systems</h3>
+                    <p>Specialized in automotive inverter systems, EV charging hardware, and power conversion solutions. Extensive experience with automotive protocols (CAN, LIN) and compliance with functional safety standards (ISO 26262, IEC 61508).</p>
+                    <p><strong>Key Contributions:</strong></p>
+                    <ul>
+                        <li>System architecture for automotive electric vehicle inverters</li>
+                        <li>EV charging station hardware design and compliance</li>
+                        <li>High-voltage power electronics (110-1000V, up to 200A)</li>
+                        <li>Autonomous vehicle lighting and control systems</li>
+                        <li>Compliance with SAE J1772/J3400, IEC 61851 standards</li>
+                    </ul>
+                </div>
+                
+                <div class="experience-card">
+                    <div class="experience-icon">
+                        <i class="fas fa-microchip"></i>
+                    </div>
+                    <h3>Hardware & PCB Design</h3>
+                    <p>Expert in complete hardware development lifecycle from concept to production. Proficient with industry-standard tools including Altium, Cadence Allegro, OrCAD, and Mentor Graphics for high-speed, high-density PCB design.</p>
+                    <p><strong>Key Contributions:</strong></p>
+                    <ul>
+                        <li>High-speed PCB layout with signal integrity focus</li>
+                        <li>RF design and electromagnetic compatibility</li>
+                        <li>Power management and distribution systems</li>
+                        <li>Medical device hardware compliant with FDA standards</li>
+                        <li>Manufacturing design for cost optimization</li>
+                    </ul>
+                </div>
+                
+                <div class="experience-card">
+                    <div class="experience-icon">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <h3>Systems Engineering & Consulting</h3>
+                    <p>End-to-end systems engineering with expertise in requirements management, system architecture, and technical documentation. Experience with Agile methodologies and industry-standard tools like JIRA, Polarion, and JAMA.</p>
+                    <p><strong>Key Contributions:</strong></p>
+                    <ul>
+                        <li>Requirements development and management</li>
+                        <li>System architecture and performance specifications</li>
+                        <li>Technical documentation and compliance verification</li>
+                        <li>Cross-functional team leadership and coordination</li>
+                        <li>Project management and risk assessment</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <div class="container">
+            <h2>Technical Skills</h2>
+            <div class="skills-categories">
+                <div class="skill-category">
+                    <h3>Design Tools & Software</h3>
+                    <div class="skill-items">
+                        <span class="skill-item">Altium Designer</span>
+                        <span class="skill-item">Cadence Allegro</span>
+                        <span class="skill-item">OrCAD/PSpice</span>
+                        <span class="skill-item">Mentor Graphics</span>
+                        <span class="skill-item">AutoCAD</span>
+                        <span class="skill-item">SolidWorks</span>
+                        <span class="skill-item">MATLAB</span>
+                        <span class="skill-item">MathCAD</span>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h3>Systems & Standards</h3>
+                    <div class="skill-items">
+                        <span class="skill-item">CAN/LIN/TCP/IP</span>
+                        <span class="skill-item">SAE J1772/J3400</span>
+                        <span class="skill-item">IEC 61851/ISO 15118</span>
+                        <span class="skill-item">ISO 26262/IEC 61508</span>
+                        <span class="skill-item">OCPP</span>
+                        <span class="skill-item">UL/NIST Standards</span>
+                        <span class="skill-item">FDA Medical Standards</span>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h3>Engineering Processes</h3>
+                    <div class="skill-items">
+                        <span class="skill-item">Requirements Management</span>
+                        <span class="skill-item">System Architecture Design</span>
+                        <span class="skill-item">Functional Safety</span>
+                        <span class="skill-item">EMC/EMI Testing</span>
+                        <span class="skill-item">Root Cause Analysis</span>
+                        <span class="skill-item">Agile/Scrum Methodologies</span>
+                        <span class="skill-item">JIRA/Polarion</span>
+                        <span class="skill-item">JAMA/IBM DOORS</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+        <div class="container">
+            <h2>Notable Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <h3>Smart Hive Bee Monitoring System</h3>
+                    <p>Integrated sensor system for comprehensive hive monitoring including humidity, weight, temperature, and heater control using wooden beehive foundation.</p>
+                </div>
+                
+                <div class="project-card">
+                    <h3>Automotive CAN Gateway</h3>
+                    <p>Gateway for vehicle networks transmitting messages from sensors and I/O to control relays, drives, and LEDs in automotive applications.</p>
+                </div>
+                
+                <div class="project-card">
+                    <h3>HHO Controller for Hydrogen Injection</h3>
+                    <p>Controller with display module for PWM signal, current, voltage, and heating parameters (20-50 Amp control) for automotive hydrogen systems.</p>
+                </div>
+                
+                <div class="project-card">
+                    <h3>Precise Medical Liquid Dispenser</h3>
+                    <p>Medical dosing device with display and keyboard interface for precise liquid dispensing in clinical applications.</p>
+                </div>
+                
+                <div class="project-card">
+                    <h3>RF Vector Network Analyzer</h3>
+                    <p>Designed and built analyzer applying frequency ramp to DUT, measuring output signal, and plotting gain/phase transfer curves.</p>
+                </div>
+                
+                <div class="project-card">
+                    <h3>Industrial Measurement Systems</h3>
+                    <p>Developed LC-meter, bin/tank level measurement systems (ultrasound and accelerometer-based), and network analyzers for industrial applications.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section - UPDATED: No phone number -->
+    <section id="contact">
+        <div class="container">
+            <h2>Contact Me</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Consulting Services Available</h3>
+                    <p>Available for hardware engineering consulting, system architecture, PCB design, and engineering solutions across North America.</p>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div>
+                            <h4>Email</h4>
+                            <p>lyadski@gmail.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div>
+                            <h4>Location</h4>
+                            <p>Windsor, Ontario<br>Serving clients across Canada & USA</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <div>
+                            <h4>Consulting Focus Areas</h4>
+                            <p>• EV Charging Systems<br>• Power Electronics Design<br>• PCB Layout & Manufacturing<br>• Automotive Electronics<br>• Medical Device Hardware<br>• System Architecture</p>
+                        </div>
+                    </div>
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/in/alexander-lyadski/" class="social-link" target="_blank">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-stack-overflow"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <input type="text" name="name" placeholder="Your Name" required>
+                        <input type="email" name="email" placeholder="Your Email" required>
+                        <input type="text" name="company" placeholder="Company (Optional)">
+                        <select name="service" required>
+                            <option value="">Select Service Interest</option>
+                            <option value="ev-charging">EV Charging Systems</option>
+                            <option value="power-electronics">Power Electronics Design</option>
+                            <option value="pcb-design">PCB Design & Layout</option>
+                            <option value="automotive">Automotive Electronics</option>
+                            <option value="medical">Medical Device Hardware</option>
+                            <option value="system-arch">System Architecture</option>
+                            <option value="consulting">General Consulting</option>
+                        </select>
+                        <textarea name="message" placeholder="Project Details or Message" required></textarea>
+                        <button type="submit" class="btn">Send Inquiry</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <a href="#" class="logo">Alexander<span>Lyadski</span></a>
+                </div>
+                <div>
+                    <p>Hardware & Systems Engineering Consultant</p>
+                    <p>EV Charging • Power Electronics • System Architecture</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2024 Alexander Lyadski. All rights reserved. | Serving clients across Canada and the United States</p>
+                <p>Windsor, Ontario | Email: lyadski@gmail.com | LinkedIn: linkedin.com/in/alexander-lyadski</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+        
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Form submission
+        const contactForm = document.getElementById('contactForm');
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            // Simulate form submission
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Sending...';
+            submitBtn.disabled = true;
+            
+            setTimeout(() => {
+                alert(`Thank you for your inquiry, ${data.name}! I will respond to ${data.email} regarding ${data.service} within 24 hours.`);
+                this.reset();
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }, 1000);
+        });
+        
+        // Add animation to experience cards
+        const experienceCards = document.querySelectorAll('.experience-card');
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }, index * 100);
+                }
+            });
+        }, observerOptions);
+        
+        experienceCards.forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
